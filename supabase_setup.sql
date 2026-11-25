@@ -162,7 +162,7 @@ begin
   if a#>'{settings,pos}' is distinct from b#>'{settings,pos}' and not pm_can(p,'purch','loads') then return 'purch'; end if;
   if (coalesce(a->'settings','{}'::jsonb) - 'company' - 'pos' - 'lastBackup')
      is distinct from (coalesce(b->'settings','{}'::jsonb) - 'company' - 'pos' - 'lastBackup')
-     and not exists (select 1 from jsonb_each_text(p) where value ~ '^[0-9]+$' and value::int >= 2)
+     and not exists (select 1 from jsonb_each_text(p - 'eur') where value ~ '^[0-9]+$' and value::int >= 2)
      then return 'settings'; end if;
   return null;
 end $$;
